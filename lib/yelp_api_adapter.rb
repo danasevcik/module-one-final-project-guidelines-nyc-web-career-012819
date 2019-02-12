@@ -9,7 +9,7 @@ API_KEY = ENV["API_KEY"]
 DEFAULT_BUSINESS_ID = "yelp-san-francisco"
 DEFAULT_TERM = "dinner"
 DEFAULT_LOCATION = "New York, NY"
-SEARCH_LIMIT = 1
+SEARCH_LIMIT = 3
 
 class YelpApiAdapter
   #Returns a parsed json object of the request
