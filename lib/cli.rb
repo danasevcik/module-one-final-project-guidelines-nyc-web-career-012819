@@ -41,7 +41,7 @@ def old_user_menu(user_name)
     @my_saves = Save.where(user_id: @user.id)
     your_shake_shacks
     puts print_my_restaurants
-    # do_you_want_to_select
+    do_you_want_to_select
     old_user_menu(user_name)
   elsif input == "1" && (Save.where(user_id: @user.id).count <= 0)
     puts "#{user_name}, you don't have any saved Shake Shacks yet."
@@ -49,54 +49,77 @@ def old_user_menu(user_name)
   elsif input == "2"
     puts "Please enter a zip code:"
     get_zip_code
+  elsif input == "3"
+    do_you_want_to_exit
   elsif input == "4"
     goodbye
     exit!
-  elsif input == "3"
-    really?
-    answer = gets.chomp
-    if answer == "y"
-      really_really?
-      final_answer = gets.chomp
-      if final_answer == "y"
-        User.where(name:  @user.name).delete_all
-        goodbye
-        exit!
-      elsif  final_answer == "n"
-        knew_it
-        old_user_menu(user_name)
-      end
-    elsif answer == "n"
-      knew_it
-      old_user_menu(user_name)
-    else
-      puts "valid input please"
-      old_user_menu(user_name)
-    end
-
   else
     puts "Please enter 1, 2, 3, or 4!"
     old_user_menu(user_name)
   end
 end
 
-# def do_you_want_to_select
-#   "Do you want to choose one of your favorites?"
-#   # get answer
-#   #  if yes, choose one
-#   # if no, end
-#   # if invalid input, print something and go back to do_you_want_to_select
-#   # what do you want to do???
-#     # phone #?
-#     # is it open?
-#     # give me website
-#
-# end
+def do_you_want_to_select
+  select_from_favorites
+  yes_or_no = gets.chomp
+  if yes_or_no == "y"
+    want_to_select
+  elsif yes_or_no == "n"
+    old_user_menu(@user.name)
+  else
+    please_enter_y_or_n
+    old_user_menu(@user.name)
+  end
+ end
 
+ def want_to_select
+   number_version_of_print_my_restaurants
+   select_which_number
+   number_response = gets.chomp
+   if @chosen_restuarant = number_version_of_print_my_restaurants[number_response.to_i - 1]
+     @yelp_chosen_restaurant = YelpApiAdapter.search("Shake Shack", @chosen_restuarant)
+     @yelp_chosen_restaurant.find do |single_rest|
+       if single_rest["alias"] == @chosen_restuarant
+         puts "
+         Name: #{single_rest["alias"]}
+         URL: https://www.yelp.com/biz/#{single_rest["alias"]}
+         Rating: #{single_rest["rating"]}
+         Address: #{single_rest["location"]["display_address"]}
+         Phone Number: #{single_rest["phone"]}
+         "
+         if single_rest["is_closed"] == false
+           this_shake_shack_is_open
+           old_user_menu(@user.name)
+         elsif single_rest["is_closed"] == true
+           this_shake_shack_is_closed
+         end
+       else
+         trouble_connecting
+         old_user_menu(@user.name)
+       end
+     end
+   else
+     puts "
+
+
+     Please enter a valid number."
+     want_to_select
+   end
+ end
 
 def print_my_restaurants
-  @my_saves.map do |save|
+  @my_saves_mapped = @my_saves.map do |save|
+    # binding.pry
     Ss.find(save.ss_id).name
+  end
+end
+
+def number_version_of_print_my_restaurants
+  count = 0
+  @my_saves_mapped.each do |restaurant_name|
+    puts "#{count+1}: #{restaurant_name}"
+    count += 1
   end
 end
 
@@ -107,6 +130,28 @@ def new_user_menu(user_name)
   get_zip_code
 end
 
+def do_you_want_to_exit
+  really?
+  answer = gets.chomp
+  if answer == "y"
+    really_really?
+    final_answer = gets.chomp
+    if final_answer == "y"
+      User.where(name:  @user.name).delete_all
+      goodbye
+      exit!
+    elsif  final_answer == "n"
+      knew_it
+      old_user_menu(user_name)
+    end
+  elsif answer == "n"
+    knew_it
+    old_user_menu(user_name)
+  else
+    puts "valid input please"
+    old_user_menu(user_name)
+  end
+end
 
 def get_zip_code
   zip_code = gets.chomp
@@ -218,6 +263,45 @@ def which_one
   puts "Type the restaurant name"
 end
 
+def please_enter_y_or_n
+  puts "
+
+
+  ╔═╗┬  ┌─┐┌─┐┌─┐┌─┐  ┌─┐┌┐┌┌┬┐┌─┐┬─┐  ┬ ┬  ┌─┐┬─┐  ┌┐┌
+  ╠═╝│  ├┤ ├─┤└─┐├┤   ├┤ │││ │ ├┤ ├┬┘  └┬┘  │ │├┬┘  │││
+  ╩  ┴─┘└─┘┴ ┴└─┘└─┘  └─┘┘└┘ ┴ └─┘┴└─   ┴   └─┘┴└─  ┘└┘o
+
+
+  "
+end
+
+def select_which_number
+  puts "
+
+
+  ╔═╗┌─┐┬  ┌─┐┌─┐┌┬┐  ┬ ┬┬ ┬┬┌─┐┬ ┬  ┌┐┌┬ ┬┌┬┐┌┐ ┌─┐┬─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─  ┬ ┬┌─┐┬ ┬┌┬┐  ┬  ┬┬┌─┌─┐  ┌┬┐┌─┐  ┬  ┬┬┌─┐┬ ┬
+  ╚═╗├┤ │  ├┤ │   │   │││├─┤││  ├─┤  ││││ ││││├┴┐├┤ ├┬┘  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐  └┬┘│ ││ │ ││  │  │├┴┐├┤    │ │ │  └┐┌┘│├┤ │││
+  ╚═╝└─┘┴─┘└─┘└─┘ ┴   └┴┘┴ ┴┴└─┘┴ ┴  ┘└┘└─┘┴ ┴└─┘└─┘┴└─  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴   ┴ └─┘└─┘─┴┘  ┴─┘┴┴ ┴└─┘   ┴ └─┘   └┘ ┴└─┘└┴┘o
+
+
+  "
+end
+
+def trouble_connecting
+  puts "
+
+
+  ╔═╗┌─┐┬─┐┬─┐┬ ┬       ┬ ┬┌─┐  ┌─┐┬─┐┌─┐  ┬ ┬┌─┐┬  ┬┬┌┐┌┌─┐  ┌┬┐┬─┐┌─┐┬ ┬┌┐ ┬  ┌─┐  ┌─┐┌─┐┌┐┌┌┐┌┌─┐┌─┐┌┬┐┬┌┐┌┌─┐
+  ╚═╗│ │├┬┘├┬┘└┬┘  ───  │││├┤   ├─┤├┬┘├┤   ├─┤├─┤└┐┌┘│││││ ┬   │ ├┬┘│ ││ │├┴┐│  ├┤   │  │ │││││││├┤ │   │ │││││ ┬
+  ╚═╝└─┘┴└─┴└─ ┴        └┴┘└─┘  ┴ ┴┴└─└─┘  ┴ ┴┴ ┴ └┘ ┴┘└┘└─┘   ┴ ┴└─└─┘└─┘└─┘┴─┘└─┘  └─┘└─┘┘└┘┘└┘└─┘└─┘ ┴ ┴┘└┘└─┘
+  ┌┬┐┌─┐  ┌┬┐┬ ┬┬┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─  ┬─┐┬┌─┐┬ ┬┌┬┐  ┌┐┌┌─┐┬ ┬
+   │ │ │   │ ├─┤│└─┐  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐  ├┬┘││ ┬├─┤ │   ││││ ││││
+   ┴ └─┘   ┴ ┴ ┴┴└─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴  ┴└─┴└─┘┴ ┴ ┴   ┘└┘└─┘└┴┘o
+
+
+  "
+end
+
 def do_you_want_to_save_c
   puts "
 
@@ -226,6 +310,29 @@ def do_you_want_to_save_c
   ═╩╝└─┘   ┴ └─┘└─┘  └┴┘┴ ┴┘└┘ ┴    ┴ └─┘  └─┘┴ ┴ └┘ └─┘  └─┘┘└┘└─┘ o
 
   (y/n)
+  "
+end
+
+def this_shake_shack_is_open
+  puts "
+
+
+  ╔╦╗┬ ┬┬┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─  ┬┌─┐  ┌─┐┬ ┬┬─┐┬─┐┌─┐┌┐┌┌┬┐┬ ┬ ┬  ┌─┐┌─┐┌─┐┌┐┌┬  ╦  ┌─┐┌┬┐┌─┐  ┌─┐┌─┐┬
+   ║ ├─┤│└─┐  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐  │└─┐  │  │ │├┬┘├┬┘├┤ │││ │ │ └┬┘  │ │├─┘├┤ ││││  ║  ├┤  │ └─┐  │ ┬│ ││
+   ╩ ┴ ┴┴└─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴  ┴└─┘  └─┘└─┘┴└─┴└─└─┘┘└┘ ┴ ┴─┘┴   └─┘┴  └─┘┘└┘o  ╩═╝└─┘ ┴ └─┘  └─┘└─┘o
+
+  "
+end
+
+def this_shake_shack_is_closed
+  puts "
+
+
+  ╔═╗┌─┐┬─┐┬─┐┬ ┬  ┌┬┐┬ ┬┬┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─  ┬┌─┐  ┌─┐┬ ┬┬─┐┬─┐┌─┐┌┐┌┌┬┐┬ ┬ ┬  ┌─┐┬  ┌─┐┌─┐┌─┐┌┬┐
+  ╚═╗│ │├┬┘├┬┘└┬┘   │ ├─┤│└─┐  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐  │└─┐  │  │ │├┬┘├┬┘├┤ │││ │ │ └┬┘  │  │  │ │└─┐├┤  ││
+  ╚═╝└─┘┴└─┴└─ ┴┘   ┴ ┴ ┴┴└─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴  ┴└─┘  └─┘└─┘┴└─┴└─└─┘┘└┘ ┴ ┴─┘┴   └─┘┴─┘└─┘└─┘└─┘─┴┘o
+
+
   "
 end
 
@@ -249,6 +356,18 @@ def do_you_want_to_save
 ╔╦╗┌─┐  ┬ ┬┌─┐┬ ┬  ┬ ┬┌─┐┌┐┌┌┬┐  ┌┬┐┌─┐  ┌─┐┌─┐┬  ┬┌─┐  ┌┬┐┬ ┬┬┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─┌─┐
  ║║│ │  └┬┘│ ││ │  │││├─┤│││ │    │ │ │  └─┐├─┤└┐┌┘├┤    │ ├─┤│└─┐  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐ ┌┘
 ═╩╝└─┘   ┴ └─┘└─┘  └┴┘┴ ┴┘└┘ ┴    ┴ └─┘  └─┘┴ ┴ └┘ └─┘   ┴ ┴ ┴┴└─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴ o
+
+(y/n)
+  "
+end
+
+def select_from_favorites
+  puts "
+
+
+  ╦ ╦┌─┐┬ ┬┬  ┌┬┐  ┬ ┬┌─┐┬ ┬  ┬  ┬┬┌─┌─┐  ┌┬┐┌─┐  ┌─┐┌─┐┬  ┌─┐┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐  ┌─┐┌─┐┬  ┬┌─┐┬─┐┬┌┬┐┌─┐┌─┐┌─┐
+  ║║║│ ││ ││   ││  └┬┘│ ││ │  │  │├┴┐├┤    │ │ │  └─┐├┤ │  ├┤ │   │   ├┤ ├┬┘│ ││││  ├┤ ├─┤└┐┌┘│ │├┬┘│ │ ├┤ └─┐ ┌┘
+  ╚╩╝└─┘└─┘┴─┘─┴┘   ┴ └─┘└─┘  ┴─┘┴┴ ┴└─┘   ┴ └─┘  └─┘└─┘┴─┘└─┘└─┘ ┴   └  ┴└─└─┘┴ ┴  └  ┴ ┴ └┘ └─┘┴└─┴ ┴ └─┘└─┘ o
 
 (y/n)
   "
@@ -318,7 +437,6 @@ Please select a number:
 2. Find a new Shake Shack
 3. Delete my account
 4. Exit
-5. select from saved list.
   "
 end
 
