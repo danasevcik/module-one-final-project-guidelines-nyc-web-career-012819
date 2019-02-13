@@ -44,7 +44,6 @@ def old_user_menu(user_name)
   #4. exit app
   old_user_menu_print
   input = gets.chomp
-  # binding.pry
   @user = User.find_by(name: user_name)
   if input == "1" && (Save.where(user_id: @user.id).count > 0)
     @my_saves = Save.where(user_id: @user.id)
@@ -120,7 +119,6 @@ def do_you_want_to_select
 def print_my_restaurants
   #print a user's saved restaurants
   @my_saves_mapped = @my_saves.map do |save|
-    # binding.pry
     Ss.find(save.ss_id).name
   end
 end
@@ -186,14 +184,12 @@ def get_ss_from_zip_code(zip_code)
     Phone Number: #{closest_ss["phone"]}
     "
     @restaurant = Ss.create(name: "#{closest_ss["alias"]}")
-    # binding.pry
     do_you_want_to_save_by_zip
   elsif closest_ss["location"]["zip_code"] != zip_code
     puts "
     There are no Shake Shacks in your zip code.
     Please enter your city name:
     ".colorize(:green)
-    # city_name = gets.chomp
     get_ss_from_city
   end
 end
@@ -205,7 +201,6 @@ def get_ss_from_city
     new_york_version(city_name)
   end
   closest_city_ss = YelpApiAdapter.search("Shake Shack", city_name)
-# binding.pry
   if closest_city_ss.first["location"]["city"] == city_name.split.map(&:capitalize).join(' ')
     puts "Your 3 closest Shake Shacks:".colorize(:green)
     closest_city_ss.each do |each_shake_shack|
@@ -251,8 +246,6 @@ def do_you_want_to_save_by_city
   user_input = gets.chomp
   if user_input == 'y'
     which_one
-    # Please select one of the following by number
-    # print_options_and_please_select_by_number
     restaurant_name_response = gets.chomp
     if !Ss.find_by(name: "#{restaurant_name_response}")
       puts "Please enter one of the three Shake Shack names.".colorize(:green)
@@ -274,17 +267,13 @@ def do_you_want_to_save_by_city
     puts "Please enter y or n".colorize(:green)
     do_you_want_to_save_by_city
   end
-
 end
-
 
 def do_you_want_to_save_by_zip
   #ask user if they want to save a shake shack based on zip code entry
   do_you_want_to_save
   user_input = gets.chomp
-  # binding.pry
   if user_input == 'y'
-    # binding.pry
     Save.create(user_id: @user.id, ss_id: @restaurant.id)
     old_user_menu(@user.name)
     puts "Saved!"
