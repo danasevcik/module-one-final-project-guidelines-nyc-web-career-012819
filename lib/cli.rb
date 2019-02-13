@@ -254,16 +254,20 @@ end
 
 
 def which_one
+  sleep(1)
   puts "
   ╦ ╦┬ ┬┬┌─┐┬ ┬  ┌─┐┌┐┌┌─┐┌─┐
   ║║║├─┤││  ├─┤  │ ││││├┤  ┌┘
   ╚╩╝┴ ┴┴└─┘┴ ┴  └─┘┘└┘└─┘ o
 
   "
+  sleep(1)
   puts "Type the restaurant name"
+  sleep(1)
 end
 
 def please_enter_y_or_n
+  sleep(1)
   puts "
 
 
@@ -273,9 +277,11 @@ def please_enter_y_or_n
 
 
   "
+  sleep(1)
 end
 
 def select_which_number
+  sleep(1)
   puts "
 
 
@@ -285,9 +291,11 @@ def select_which_number
 
 
   "
+  sleep(1)
 end
 
 def trouble_connecting
+  sleep(1)
   puts "
 
 
@@ -300,9 +308,11 @@ def trouble_connecting
 
 
   "
+  sleep(1)
 end
 
 def do_you_want_to_save_c
+  sleep(1)
   puts "
 
   ╔╦╗┌─┐  ┬ ┬┌─┐┬ ┬  ┬ ┬┌─┐┌┐┌┌┬┐  ┌┬┐┌─┐  ┌─┐┌─┐┬  ┬┌─┐  ┌─┐┌┐┌┌─┐┌─┐
@@ -311,9 +321,11 @@ def do_you_want_to_save_c
 
   (y/n)
   "
+  sleep(1)
 end
 
 def this_shake_shack_is_open
+  sleep(1)
   puts "
 
 
@@ -322,9 +334,11 @@ def this_shake_shack_is_open
    ╩ ┴ ┴┴└─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴  ┴└─┘  └─┘└─┘┴└─┴└─└─┘┘└┘ ┴ ┴─┘┴   └─┘┴  └─┘┘└┘o  ╩═╝└─┘ ┴ └─┘  └─┘└─┘o
 
   "
+  sleep(1)
 end
 
 def this_shake_shack_is_closed
+  sleep(1)
   puts "
 
 
@@ -334,9 +348,11 @@ def this_shake_shack_is_closed
 
 
   "
+  sleep(1)
 end
 
 def knew_it
+  sleep(1)
   puts "
 
 
@@ -346,11 +362,13 @@ def knew_it
 
 
   "
+  sleep(1)
 end
 
 
 
 def do_you_want_to_save
+  sleep(1)
   puts "
 
 ╔╦╗┌─┐  ┬ ┬┌─┐┬ ┬  ┬ ┬┌─┐┌┐┌┌┬┐  ┌┬┐┌─┐  ┌─┐┌─┐┬  ┬┌─┐  ┌┬┐┬ ┬┬┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─┌─┐
@@ -359,9 +377,11 @@ def do_you_want_to_save
 
 (y/n)
   "
+  sleep(1)
 end
 
 def select_from_favorites
+  sleep(1)
   puts "
 
 
@@ -371,9 +391,11 @@ def select_from_favorites
 
 (y/n)
   "
+  sleep(1)
 end
 
 def exit
+  sleep(1)
   puts "
 
 ╔═╗┌─┐┌┬┐┌─┐  ┌┐ ┌─┐┌─┐┬┌─  ┌┬┐┌─┐  ┬  ┬┬┌─┐┬┌┬┐  ┬ ┬┬ ┬┌─┐┌┐┌  ┬ ┬┌─┐┬ ┬  ┌┬┐┌─┐┬  ┬┌─┐  ┌─┐┬┌┬┐┬┌─┐┌─┐
@@ -381,10 +403,12 @@ def exit
 ╚═╝└─┘┴ ┴└─┘  └─┘┴ ┴└─┘┴ ┴   ┴ └─┘   └┘ ┴└─┘┴ ┴   └┴┘┴ ┴└─┘┘└┘   ┴ └─┘└─┘  ┴ ┴└─┘ └┘ └─┘  └─┘┴ ┴ ┴└─┘└─┘
 
   "
+  sleep(1)
 end
 
 
 def goodbye
+  sleep(1)
   puts "
 
 
@@ -412,22 +436,27 @@ end
 
 
 def new_user_greeting
+  sleep(1)
   puts "
 ╦ ╦┌─┐┬  ┌─┐┌─┐┌┬┐┌─┐  ┌┬┐┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─  ╔═╗┬┌┐┌┌┬┐┌─┐┬─┐┬
 ║║║├┤ │  │  │ ││││├┤    │ │ │  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐  ╠╣ ││││ ││├┤ ├┬┘│
 ╚╩╝└─┘┴─┘└─┘└─┘┴ ┴└─┘   ┴ └─┘  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴  ╚  ┴┘└┘─┴┘└─┘┴└─o
 "
+sleep(1)
 end
 
 def old_user_greeting
+  sleep(1)
   puts "
 ╦ ╦┌─┐┬  ┌─┐┌─┐┌┬┐┌─┐  ╔╗ ┌─┐┌─┐┬┌─┬
 ║║║├┤ │  │  │ ││││├┤   ╠╩╗├─┤│  ├┴┐│
 ╚╩╝└─┘┴─┘└─┘└─┘┴ ┴└─┘  ╚═╝┴ ┴└─┘┴ ┴o
 "
+sleep(1)
 end
 
 def old_user_menu_print
+  sleep(1)
   puts "
 ╦ ╦┬ ┬┌─┐┌┬┐  ┬ ┬┌─┐┬ ┬┬  ┌┬┐  ┬ ┬┌─┐┬ ┬  ┬  ┬┬┌─┌─┐  ┌┬┐┌─┐  ┌┬┐┌─┐┌─┐
 ║║║├─┤├─┤ │   ││││ ││ ││   ││  └┬┘│ ││ │  │  │├┴┐├┤    │ │ │   │││ │ ┌┘
@@ -438,6 +467,7 @@ Please select a number:
 3. Delete my account
 4. Exit
   "
+  sleep(1)
 end
 
 def main_greeting
@@ -462,45 +492,55 @@ def main_greeting
 
 
   "
+  sleep(1)
 end
 
 def what_is_your_name
+  sleep(1)
   puts "
 
 ╦ ╦┬ ┬┌─┐┌┬┐  ┬┌─┐  ┬ ┬┌─┐┬ ┬┬─┐  ┌┐┌┌─┐┌┬┐┌─┐┌─┐
 ║║║├─┤├─┤ │   │└─┐  └┬┘│ ││ │├┬┘  │││├─┤│││├┤  ┌┘
 ╚╩╝┴ ┴┴ ┴ ┴   ┴└─┘   ┴ └─┘└─┘┴└─  ┘└┘┴ ┴┴ ┴└─┘ o
 "
+sleep(1)
 end
 
 def help_find_ss
+  sleep(1)
   puts "
 
 ╦ ╦┌─┐  ┬ ┬┬┬  ┬    ┬ ┬┌─┐┬  ┌─┐  ┬ ┬┌─┐┬ ┬  ┌─┐┬┬┌┐┌┌┬┐  ┌─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─
 ║║║├┤   │││││  │    ├─┤├┤ │  ├─┘  └┬┘│ ││ │  ├┤ │││││ ││  ├─┤  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐
 ╚╩╝└─┘  └┴┘┴┴─┘┴─┘  ┴ ┴└─┘┴─┘┴     ┴ └─┘└─┘  └  ┴┴┘└┘─┴┘  ┴ ┴  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴
 "
+sleep(1)
 end
 
 def ask_for_zip_code
+  sleep(1)
   puts "
 
 ╦ ╦┬ ┬┌─┐┌┬┐  ┬┌─┐  ┬ ┬┌─┐┬ ┬┬─┐  ┌─┐┬┌─┐  ┌─┐┌─┐┌┬┐┌─┐┌─┐
 ║║║├─┤├─┤ │   │└─┐  └┬┘│ ││ │├┬┘  ┌─┘│├─┘  │  │ │ ││├┤  ┌┘
 ╚╩╝┴ ┴┴ ┴ ┴   ┴└─┘   ┴ └─┘└─┘┴└─  └─┘┴┴    └─┘└─┘─┴┘└─┘ o
 "
+sleep(1)
 end
 
 def your_shake_shacks
+  sleep(1)
   puts "
   ╦ ╦┌─┐┬ ┬┬─┐  ╔═╗┬ ┬┌─┐┬┌─┌─┐  ╔═╗┬ ┬┌─┐┌─┐┬┌─┌─┐
   ╚╦╝│ ││ │├┬┘  ╚═╗├─┤├─┤├┴┐├┤   ╚═╗├─┤├─┤│  ├┴┐└─┐
    ╩ └─┘└─┘┴└─  ╚═╝┴ ┴┴ ┴┴ ┴└─┘  ╚═╝┴ ┴┴ ┴└─┘┴ ┴└─┘
 
   "
+  sleep(1)
 end
 
 def really?
+  sleep(1)
   puts "
 
 
@@ -511,10 +551,11 @@ def really?
 (y/n)
 
   "
-
+sleep(1)
 end
 
 def really_really?
+  sleep(1)
   puts "
 
 
@@ -525,6 +566,7 @@ def really_really?
 (y/n)
 
   "
+  sleep(1)
 
 end
 
