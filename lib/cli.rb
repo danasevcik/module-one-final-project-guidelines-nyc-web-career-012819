@@ -6,6 +6,13 @@ require_relative '../lib/user.rb'
 require_relative '../lib/yelp_api_adapter.rb'
 require_relative '../lib/cli.rb'
 
+# Notes for tomorrow
+# tty prompt
+# select from saved
+# favorite features
+# check if a person can save a single SS more than once
+
+
 def greeting
   main_greeting
   what_is_your_name
@@ -29,13 +36,14 @@ def old_user_menu(user_name)
   old_user_menu_print
   input = gets.chomp
   # binding.pry
-  @old_user = User.find_by(name: user_name)
-  if input == "1" && (Save.where(user_id: @old_user.id).count > 0)
-    @my_saves = Save.where(user_id: @old_user.id)
+  @user = User.find_by(name: user_name)
+  if input == "1" && (Save.where(user_id: @user.id).count > 0)
+    @my_saves = Save.where(user_id: @user.id)
     your_shake_shacks
     puts print_my_restaurants
+    # do_you_want_to_select
     old_user_menu(user_name)
-  elsif input == "1" && (Save.where(user_id: @old_user.id).count <= 0)
+  elsif input == "1" && (Save.where(user_id: @user.id).count <= 0)
     puts "#{user_name}, you don't have any saved Shake Shacks yet."
     old_user_menu(user_name)
   elsif input == "2"
@@ -51,7 +59,7 @@ def old_user_menu(user_name)
       really_really?
       final_answer = gets.chomp
       if final_answer == "y"
-        User.where(name:  @old_user.name).delete_all
+        User.where(name:  @user.name).delete_all
         goodbye
         exit!
       elsif  final_answer == "n"
@@ -72,6 +80,20 @@ def old_user_menu(user_name)
   end
 end
 
+# def do_you_want_to_select
+#   "Do you want to choose one of your favorites?"
+#   # get answer
+#   #  if yes, choose one
+#   # if no, end
+#   # if invalid input, print something and go back to do_you_want_to_select
+#   # what do you want to do???
+#     # phone #?
+#     # is it open?
+#     # give me website
+#
+# end
+
+
 def print_my_restaurants
   @my_saves.map do |save|
     Ss.find(save.ss_id).name
@@ -79,7 +101,7 @@ def print_my_restaurants
 end
 
 def new_user_menu(user_name)
-  @old_user = User.create(name: user_name)
+  @user = User.create(name: user_name)
   help_find_ss
   ask_for_zip_code
   get_zip_code
@@ -154,12 +176,12 @@ def do_you_want_to_save_by_city
       do_you_want_to_save_by_city
     else
       @restaurant_to_save = Ss.find_by(name: "#{restaurant_name_response}")
-      Save.create(user_id: @old_user.id, ss_id: @restaurant_to_save.id)
+      Save.create(user_id: @user.id, ss_id: @restaurant_to_save.id)
       puts "Saved!"
-      old_user_menu(@old_user.name)
+      old_user_menu(@user.name)
     end
   elsif user_input == 'n'
-    old_user_menu(@old_user.name)
+    old_user_menu(@user.name)
   end
 end
 
@@ -169,11 +191,11 @@ def do_you_want_to_save_by_zip
   # binding.pry
   if user_input == 'y'
     # binding.pry
-    Save.create(user_id: @old_user.id, ss_id: @restaurant.id)
-    old_user_menu(@old_user.name)
+    Save.create(user_id: @user.id, ss_id: @restaurant.id)
+    old_user_menu(@user.name)
     puts "Saved!"
   elsif user_input == 'n'
-    old_user_menu(@old_user.name)
+    old_user_menu(@user.name)
   end
 end
 
@@ -296,6 +318,7 @@ Please select a number:
 2. Find a new Shake Shack
 3. Delete my account
 4. Exit
+5. select from saved list.
   "
 end
 
