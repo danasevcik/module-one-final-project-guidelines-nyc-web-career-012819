@@ -9,4 +9,3 @@ require_relative '../lib/art.rb'
 
 greeting
 pry.start
-# has_user_been_here(user_name)
