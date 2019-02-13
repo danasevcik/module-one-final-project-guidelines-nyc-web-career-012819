@@ -3,8 +3,8 @@ require 'colorize'
 require 'colorized_string'
 
 # Notes for tomorrow
-# create number menu for restaurants by city
 # delete one of the saved restaurants
+# fix the "Lets Go" after restaurant is open
 
 
 def greeting # METHOD 1
@@ -105,10 +105,10 @@ def get_ss_from_zip_code(zip_code) # METHOD 8
     puts "
     Your closest Shake Shack:
 
-    Name: #{closest_ss["alias"]}
-    URL: https://www.yelp.com/biz/#{closest_ss["alias"]}
-    Rating: #{closest_ss["rating"]}
-    Address: #{closest_ss["location"]["display_address"]}
+    Name:         #{closest_ss["alias"]}
+    URL:          https://www.yelp.com/biz/#{closest_ss["alias"]}
+    Rating:       #{closest_ss["rating"]}
+    Address:      #{closest_ss["location"]["display_address"]}
     Phone Number: #{closest_ss["phone"]}
     "
     @restaurant = Ss.create(name: "#{closest_ss["alias"]}")
@@ -140,6 +140,7 @@ def want_to_select # METHOD 9
         "
         if single_rest["is_closed"] == false
           this_shake_shack_is_open #art 10
+          scroll_text # art  23
           old_user_menu(@user.name) # => method 3
         elsif single_rest["is_closed"] == true
           this_shake_shack_is_closed #art 11
@@ -171,8 +172,8 @@ def do_you_want_to_save_by_zip # METHOD 11
   user_input = gets.chomp
   if user_input == 'y'
     Save.create(user_id: @user.id, ss_id: @restaurant.id)
-    old_user_menu(@user.name) # => method 3
     puts "Saved!"
+    old_user_menu(@user.name) # => method 3
   elsif user_input == 'n'
     old_user_menu(@user.name) # => method 3
   end
@@ -181,7 +182,9 @@ end
 def get_ss_from_city # METHOD 12
   #get 3 shake shacks from city entered
   city_name = gets.chomp
+  # binding.pry
   if city_name == "new york" || "New York" || "manhattan" || "Manhattan"
+    # binding.pry
     new_york_version(city_name) # => method 14
   end
   closest_city_ss = YelpApiAdapter.search("Shake Shack", city_name)

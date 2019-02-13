@@ -43,4 +43,15 @@ class YelpApiAdapter
   end
 
 end
+
+def scroll_text #art 23
+  text = "
+  ╦  ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗
+  ║  ║╣  ║ ╚═╗  ║╣ ╠═╣ ║
+  ╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩ ╩ ╩"
+  text.each_char do |c|
+    print c
+    sleep (0.05)
+  end
+end
 # binding.pry
