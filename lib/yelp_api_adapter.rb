@@ -44,14 +44,30 @@ class YelpApiAdapter
 
 end
 
-def scroll_text #art 23
-  text = "
-  ╦  ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗
-  ║  ║╣  ║ ╚═╗  ║╣ ╠═╣ ║
-  ╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩ ╩ ╩"
-  text.each_char do |c|
-    print c
-    sleep (0.05)
-  end
-end
+# https://www.shakeshack.com/locations/
+# states = [
+#   'AK', 'AL', 'AR', 'AZ',
+#   'CA', 'CO', 'CT',
+#   'DC', 'DE',
+#   'FL',
+#   'GA',
+#   'HI',
+#   'IA', 'ID', 'IL', 'IN',
+#   'KS', 'KY',
+#   'LA',
+#   'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT',
+#   'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
+#   'OH', 'OK', 'OR',
+#   'PA',
+#   'RI',
+#   'SC', 'SD',
+#   'TN', 'TX',
+#   'UT',
+#   'VA', 'VT',
+#   'WA', 'WI', 'WV', 'WY'
+# ]
+# @all_shake_shacks = states.map { |state| YelpApiAdapter.search("Shake Shack", state) }.flatten.select { |rest| rest["name"] == "Shake Shack" }
+# above method returns restaurants with only shake shack. Every other states work, but New York.
+# this is just for the future reference. Instead of API => CLI, would be better(?) to do API => Instance => CLI.
+
 # binding.pry
