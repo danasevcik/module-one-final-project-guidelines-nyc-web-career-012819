@@ -284,13 +284,14 @@ def do_you_want_to_save_by_city # METHOD 15
     old_user_menu(@user.name) # => method 3
   else
     puts "Please enter y or n".colorize(:green)
-    do_you_want_to_save_by_city #calling this method
+    do_you_want_to_save_by_city #call this method again
   end
 end
 
 def want_to_delete # METHOD 16
+  #delete one of the saved restaurants
   number_version_of_print_my_restaurants # => method 10
-    #this method print a user's saved restauratns with numbers..
+    #this method prints a user's saved restauratns with numbers..
   select_number_to_delete # art 25
   number_response = gets.chomp
   if @chosen_restuarant_to_delete = number_version_of_print_my_restaurants[number_response.to_i - 1]
@@ -302,13 +303,6 @@ def want_to_delete # METHOD 16
     puts "Please choose a valid number.".colorize(:green)
     want_to_delete # call this method again.
   end
-    #get the user input, select the user input and do - 1 to match the index.
-    #search from our saved instance to match the element of that index.
-    # do .delete...? to delete the instance. (Save.delete)
-      # 'element'.delete( that index matches the chosen element)
-        # first, find_by user name and resturant name, then match it with ids.
-    # then puts, "successfully delete" => then go back to main menue
-    # else, please enter valid number. => then call this method again.
 end
 
 # binding.pry
