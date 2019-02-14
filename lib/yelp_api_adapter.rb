@@ -14,10 +14,6 @@ SEARCH_LIMIT = 3
 class YelpApiAdapter
   #Returns a parsed json object of the request
 
-
-
-
-
   def self.search(term, location="new york")
     url = "#{API_HOST}#{SEARCH_PATH}"
     params = {

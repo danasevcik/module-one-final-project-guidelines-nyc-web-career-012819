@@ -251,7 +251,7 @@ def which_one # art 18
   ".colorize(:green)
   sleep(1)
   puts "
-                                                      Type the restaurant name
+  Type the restaurant name
     ".colorize(:green)
   sleep(1)
 end
@@ -311,7 +311,9 @@ def scroll_text #art 23
   text = "
                                                       ╦  ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗
                                                       ║  ║╣  ║ ╚═╗  ║╣ ╠═╣ ║
-                                                      ╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩ ╩ ╩".colorize(:green)
+                                                      ╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩ ╩ ╩
+
+".colorize(:green)
   text.each_char do |c|
     print c
     sleep (0.01)

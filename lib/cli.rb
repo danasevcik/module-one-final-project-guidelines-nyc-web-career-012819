@@ -2,16 +2,14 @@ require 'pry'
 require 'colorize'
 require 'colorized_string'
 
-# Notes for tomorrow
-# delete one of the saved restaurants
-
 
 
 def greeting # METHOD 1
   #welcome greeting and ask for name
   main_greeting #art 1
   what_is_your_name #art 2
-  user_name = gets.chomp
+  user_name = gets.chomp.capitalize
+  # user_name = user_name.capitalize
   has_user_been_here(user_name) # => method 2
 end
 
@@ -47,10 +45,10 @@ def old_user_menu(user_name) # METHOD 3
     old_user_menu(user_name) # call this method again
   elsif input == "1" && (Save.where(user_id: @user.id).count <= 0)
     # if user doesn't have saves
-    puts "#{user_name}, you don't have any saved Shake Shacks yet."
+    puts "    #{user_name.upcase}, you don't have any saved Shake Shacks yet.".colorize(:green)
     old_user_menu(user_name) # call this method again
   elsif input == "2"
-    puts "Please enter a zip code:".colorize(:green)
+    puts "    Please enter a zip code:".colorize(:green)
     get_zip_code # => method 7
   elsif input == "3"
     do_you_want_to_exit # => method 13
@@ -58,7 +56,7 @@ def old_user_menu(user_name) # METHOD 3
     goodbye #art
     exit! # terminal command
   else
-    puts "Please enter 1, 2, 3, or 4!".colorize(:green)
+    puts "    Please enter 1, 2, 3, or 4!".colorize(:green)
     old_user_menu(user_name) # => method 3
   end
 end
@@ -90,7 +88,7 @@ def do_you_want_to_select # METHOD 6
     elsif view_or_delete_answer.downcase == "delete"
       want_to_delete # => method 16
     else
-      puts "Please enter 'view' or 'delete'."
+      puts "    Please enter 'view' or 'delete'.".colorize(:green)
     end
   elsif yes_or_no == "n"
     old_user_menu(@user.name) # => method 3
@@ -116,8 +114,8 @@ def get_ss_from_zip_code(zip_code) # METHOD 8
     Name:         #{closest_ss["alias"]}
     URL:          https://www.yelp.com/biz/#{closest_ss["alias"]}
     Rating:       #{closest_ss["rating"]}
-    Address:      #{closest_ss["location"]["display_address"]}
-    Phone Number: #{closest_ss["phone"]}
+    Address:      #{closest_ss["location"]["display_address"].join(', ')}
+    Phone Number: #{closest_ss["display_phone"]}
     "
     @restaurant = Ss.create(name: "#{closest_ss["alias"]}")
     do_you_want_to_save_by_zip # => method 11
@@ -143,8 +141,8 @@ def want_to_select # METHOD 9
         Name:         #{single_rest["alias"]}
         URL:          https://www.yelp.com/biz/#{single_rest["alias"]}
         Rating:       #{single_rest["rating"]}
-        Address:      #{single_rest["location"]["display_address"]}
-        Phone Number: #{single_rest["phone"]}
+        Address:      #{single_rest["location"]["display_address"].join(', ')}
+        Phone Number: #{single_rest["display_phone"]}
         "
         if single_rest["is_closed"] == false
           this_shake_shack_is_open #art 10
@@ -169,7 +167,7 @@ def number_version_of_print_my_restaurants # METHOD 10
   #print a user's saved restaurants with numbers (1. , 2. , 3. ...)
   count = 0
   @my_saves_mapped.each do |restaurant_name|
-    puts "#{count+1}: #{restaurant_name}"
+    puts "    #{count+1}:   #{restaurant_name}"
     count += 1
   end
 end
@@ -180,7 +178,7 @@ def do_you_want_to_save_by_zip # METHOD 11
   user_input = gets.chomp
   if user_input == 'y'
     Save.create(user_id: @user.id, ss_id: @restaurant.id)
-    puts "Saved!"
+    puts "    Saved!".colorize(:green)
     old_user_menu(@user.name) # => method 3
   elsif user_input == 'n'
     old_user_menu(@user.name) # => method 3
@@ -197,14 +195,14 @@ def get_ss_from_city # METHOD 12
   end
   closest_city_ss = YelpApiAdapter.search("Shake Shack", city_name)
   if closest_city_ss.first["location"]["city"] == city_name.split.map(&:capitalize).join(' ')
-    puts "Your 3 closest Shake Shacks:".colorize(:green)
+    puts "    Your 3 closest Shake Shacks:".colorize(:green)
     closest_city_ss.each do |each_shake_shack|
       puts "
       Name:         #{each_shake_shack["alias"]}
       URL:          https://www.yelp.com/biz/#{each_shake_shack["alias"]}
       Rating:       #{each_shake_shack["rating"]}
-      Address:      #{each_shake_shack["location"]["display_address"]}
-      Phone Number: #{each_shake_shack["phone"]}
+      Address:      #{each_shake_shack["location"]["display_address"].join(', ')}
+      Phone Number: #{each_shake_shack["display_phone"]}
       ".colorize(:green)
       Ss.create(name: "#{each_shake_shack["alias"]}")
     end
@@ -232,12 +230,15 @@ def do_you_want_to_exit # METHOD 13
     elsif  final_answer == "n"
       knew_it # art 16
       old_user_menu(@user) # => method 3
+    else
+      puts "    Please enter 'y' or 'n'.".colorize(:green)
+      old_user_menu(@user)
     end
   elsif answer == "n"
     knew_it # art 16
     old_user_menu(@user) # => method 3
   else
-    puts "valid input please".colorize(:green)
+    puts "    Please enter 'y' or 'n'.".colorize(:green)
     old_user_menu(@user) # => method 3
   end
 end
@@ -245,14 +246,14 @@ end
 def new_york_version(city_name) # METHOD 14
   #get 3 shake shacks from city entered if its new york or manhattan
   new_york_ss = YelpApiAdapter.search("Shake Shack", city_name)
-  puts "3 Shake Shacks near you:".colorize(:green)
+  puts "    3 Shake Shacks near you:".colorize(:green)
   new_york_ss.each do |each_shake_shack|
     puts "
     Name:         #{each_shake_shack["alias"]}
     URL:          https://www.yelp.com/biz/#{each_shake_shack["alias"]}
     Rating:       #{each_shake_shack["rating"]}
-    Address:      #{each_shake_shack["location"]["display_address"]}
-    Phone Number: #{each_shake_shack["phone"]}
+    Address:      #{each_shake_shack["location"]["display_address"].join(', ')}
+    Phone Number: #{each_shake_shack["display_phone"]}
     ".colorize(:green)
     Ss.create(name: "#{each_shake_shack["alias"]}")
   end
@@ -267,23 +268,23 @@ def do_you_want_to_save_by_city # METHOD 15
     which_one # art 18
     restaurant_name_response = gets.chomp
     if !Ss.find_by(name: "#{restaurant_name_response}")
-      puts "Please enter one of the three Shake Shack names.".colorize(:green)
+      puts "    Please enter one of the three Shake Shack names.".colorize(:green)
       do_you_want_to_save_by_city # calling this method
     else
       @restaurant_to_save = Ss.find_by(name: "#{restaurant_name_response}")
       if !Save.find_by(user_id: @user.id, ss_id: @restaurant_to_save.id)
         Save.create(user_id: @user.id, ss_id: @restaurant_to_save.id)
-        puts "Saved!"
+        puts "    Saved!".colorize(:green)
         old_user_menu(@user.name) # => method 3
       else
-        puts "That Shake Shack is already in your favorites!".colorize(:green)
+        puts "    That Shake Shack is already in your favorites!".colorize(:green)
         old_user_menu(@user.name) # => method 3
       end
     end
   elsif user_input == 'n'
     old_user_menu(@user.name) # => method 3
   else
-    puts "Please enter y or n".colorize(:green)
+    puts "    Please enter y or n".colorize(:green)
     do_you_want_to_save_by_city #call this method again
   end
 end
@@ -297,10 +298,10 @@ def want_to_delete # METHOD 16
   if @chosen_restuarant_to_delete = number_version_of_print_my_restaurants[number_response.to_i - 1]
     @rest_to_delete = Ss.find_by(name: @chosen_restuarant_to_delete)
     Save.where(ss_id: @rest_to_delete.id).destroy_all
-    puts "Successfully deleted!"
+    puts "    Successfully deleted!".colorize(:green)
     old_user_menu(@user.name) # => method 3
   else
-    puts "Please choose a valid number.".colorize(:green)
+    puts "    Please choose a valid number.".colorize(:green)
     want_to_delete # call this method again.
   end
 end
