@@ -4,7 +4,7 @@ require 'colorized_string'
 
 # Notes for tomorrow
 # delete one of the saved restaurants
-# fix the "Lets Go" after restaurant is open
+
 
 
 def greeting # METHOD 1
@@ -83,7 +83,15 @@ def do_you_want_to_select # METHOD 6
   select_from_favorites #art 7
   yes_or_no = gets.chomp
   if yes_or_no == "y"
-    want_to_select # => method 9, choose which shake shack to save
+    view_or_delete # art 24
+    view_or_delete_answer = gets.chomp
+    if view_or_delete_answer.downcase == "view"
+      want_to_select # => method 9, choose which shake shack to save
+    elsif view_or_delete_answer.downcase == "delete"
+      want_to_delete # => method 16
+    else
+      puts "Please enter 'view' or 'delete'."
+    end
   elsif yes_or_no == "n"
     old_user_menu(@user.name) # => method 3
   else
@@ -280,7 +288,28 @@ def do_you_want_to_save_by_city # METHOD 15
   end
 end
 
-
+def want_to_delete # METHOD 16
+  number_version_of_print_my_restaurants # => method 10
+    #this method print a user's saved restauratns with numbers..
+  select_number_to_delete # art 25
+  number_response = gets.chomp
+  if @chosen_restuarant_to_delete = number_version_of_print_my_restaurants[number_response.to_i - 1]
+    @rest_to_delete = Ss.find_by(name: @chosen_restuarant_to_delete)
+    Save.where(ss_id: @rest_to_delete.id).destroy_all
+    puts "Successfully deleted!"
+    old_user_menu(@user.name) # => method 3
+  else
+    puts "Please choose a valid number.".colorize(:green)
+    want_to_delete # call this method again.
+  end
+    #get the user input, select the user input and do - 1 to match the index.
+    #search from our saved instance to match the element of that index.
+    # do .delete...? to delete the instance. (Save.delete)
+      # 'element'.delete( that index matches the chosen element)
+        # first, find_by user name and resturant name, then match it with ids.
+    # then puts, "successfully delete" => then go back to main menue
+    # else, please enter valid number. => then call this method again.
+end
 
 # binding.pry
 puts "0"
