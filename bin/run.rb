@@ -6,6 +6,6 @@ require_relative '../lib/yelp_api_adapter.rb'
 require_relative '../lib/cli.rb'
 require_relative '../lib/art.rb'
 
-
+system 'clear'
 greeting
 pry.start

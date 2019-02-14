@@ -146,7 +146,14 @@ def want_to_select # METHOD 9
         "
         if single_rest["is_closed"] == false
           this_shake_shack_is_open #art 10
-          scroll_text # art  23
+          scroll_text_1 #art 23
+          scroll_text_2 #art 26
+          scroll_text_3 #art 27
+          scroll_text_4 #art 28
+          scroll_text_5 #art 29
+          scroll_text_6 #art 30
+          scroll_text_7 #art 31
+          scroll_text_8 #art 32
           old_user_menu(@user.name) # => method 3
         elsif single_rest["is_closed"] == true
           this_shake_shack_is_closed #art 11

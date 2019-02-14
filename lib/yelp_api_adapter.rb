@@ -40,4 +40,4 @@ class YelpApiAdapter
 
 end
 
-binding.pry
+# binding.pry
