@@ -60,6 +60,9 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
+    unicode-display_width (1.4.1)
+    whirly (0.2.6)
+      unicode-display_width (~> 1.1)
 
 PLATFORMS
   ruby
@@ -74,6 +77,7 @@ DEPENDENCIES
   require_all
   sinatra-activerecord
   sqlite3
+  whirly
 
 BUNDLED WITH
    1.17.1

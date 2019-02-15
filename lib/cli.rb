@@ -143,7 +143,7 @@ def want_to_select # METHOD 9
         Rating:       #{single_rest["rating"]}
         Address:      #{single_rest["location"]["display_address"].join(', ')}
         Phone Number: #{single_rest["display_phone"]}
-        "
+        ".colorize(:green)
         if single_rest["is_closed"] == false
           this_shake_shack_is_open #art 10
           scroll_text_1 #art 23
@@ -153,7 +153,6 @@ def want_to_select # METHOD 9
           scroll_text_5 #art 29
           scroll_text_6 #art 30
           scroll_text_7 #art 31
-          scroll_text_8 #art 32
           old_user_menu(@user.name) # => method 3
         elsif single_rest["is_closed"] == true
           this_shake_shack_is_closed #art 11
@@ -174,7 +173,7 @@ def number_version_of_print_my_restaurants # METHOD 10
   #print a user's saved restaurants with numbers (1. , 2. , 3. ...)
   count = 0
   @my_saves_mapped.each do |restaurant_name|
-    puts "    #{count+1}:   #{restaurant_name}"
+    puts "    #{count+1}:   #{restaurant_name}".colorize(:green)
     count += 1
   end
 end
