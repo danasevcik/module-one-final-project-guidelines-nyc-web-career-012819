@@ -1,6 +1,6 @@
 # Shake Shack Finder project brief intro
 
-##Dana and Nate(kyung1)'s module 1 final project.
+## Dana and Nate(kyung1)'s module 1 final project.
 
 *AN APP FOR SHAKE SHACK LOVERS*
 
